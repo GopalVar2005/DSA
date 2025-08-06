@@ -4,3 +4,7 @@ int max=Integer.MIN_VALUE;
             max=Math.max(max,num);
         }
         return max;
+
+Time Complexity: O(N)
+
+Space Complexity: O(1)
