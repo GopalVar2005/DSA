@@ -1,0 +1,62 @@
+Problem Statement:
+Given two sorted arrays, arr1, and arr2 of size n and m. Find the union of two sorted arrays.
+The union of two arrays can be defined as the common and distinct elements in the two arrays.NOTE: Elements in the union should be in ascending order.
+
+Appr1:
+Use Set+Sort
+TC-O((N+M)log(N+M))
+SC-O(N+M)
+
+Appr2:
+Use LinkedSet+Insertion Approach
+TC-O((N+M)log(N+M))
+SC-O(N+M)
+
+Appr3: 
+Use TreeSet
+TC-O((N+M)log(N+M))
+SC-O(N+M)
+
+Appr4:
+Two Pointer
+int n=a.length,m=b.length,i=0,j=0;
+        ArrayList<Integer> ll=new ArrayList<>();
+        while(i<n && j<m)
+        {
+            if(a[i]<=b[j])
+            {
+                if(ll.size()==0 || ll.get(ll.size()-1)!=a[i])
+                {
+                    ll.add(a[i]);
+                    
+                }
+                i++;
+            }
+            else
+            {
+                if(ll.size()==0 || ll.get(ll.size()-1)!=b[j])
+                {
+                    ll.add(b[j]);
+                }
+                j++;
+            }
+        }
+        while(i<n)
+        {
+            if(ll.size()==0 || ll.get(ll.size()-1)!=a[i])
+                {
+                    ll.add(a[i]);
+                }
+                i++;
+        }
+        while(j<m)
+        {
+            if(ll.size()==0 || ll.get(ll.size()-1)!=b[j])
+                {
+                    ll.add(b[j]);
+                }
+                j++;
+        }
+        return ll;
+TC-O(N+M)
+SC-O(N+M)
