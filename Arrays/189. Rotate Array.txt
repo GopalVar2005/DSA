@@ -1,0 +1,45 @@
+Problem Statement:Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+
+Appr1:
+int n=arr.length;
+     for(int j=0;j<k;j++)
+     {
+        int temp=arr[n-1];
+        for(int i=n-1;i>0;i--)
+        {
+            arr[i]=arr[i-1];
+        }
+        arr[0]=temp;
+     }
+TLE
+
+Appr2:
+how rotate works
+        // 1 2 3 4 5 6 7
+        // 7 6 5 4 3 2 1
+        // 5 6 7 1 2 3 4
+rotating more than needed is waste
+        // 1 2 3 
+        // 3 1 2->1 
+        // 2 3 1 
+        // 1 2 3
+        // 3 1 2->4
+
+        int n=arr.length;
+        k=k%n;
+        reverse(arr,0,n-1);
+        reverse(arr,0,k-1);
+        reverse(arr,k,n-1);
+    }
+    public void reverse(int[] arr,int i,int j)
+    {
+        while(i<j)
+        {
+            int temp=arr[j];
+            arr[j]=arr[i];
+            arr[i]=temp;
+            i++;j--;
+        }
+    }
+TC-O(N)
+SC-O(1)
