@@ -1,0 +1,5 @@
+1. XOR
+-> Use xor when you have to deal with duplicates
+
+2. curSum-k Map
+-> Use for subarray sum equals k
