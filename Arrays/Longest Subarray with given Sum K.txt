@@ -1,0 +1,80 @@
+Problem Statement: Given an array and a sum k, we need to print the length of the longest subarray that sums to k.
+
+Appr1:
+Generate all subarrays
+TC-O(N2)
+SC-O(1)
+
+Appr2:
+Hashing
+There are two ways in which we can find subarray sum==k
+1. sum == k
+2. subarray sum = sum-k
+...........
+[sum-k][k]
+[   sum   ]
+
+For Length->
+        HashMap<Integer, Integer> map=new HashMap<>();
+        int sum=0,len=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            sum+=arr[i];
+            if(sum==k)
+            {
+                len=Math.max(len,i+1);
+            }
+            if(map.containsKey(sum-k))
+            {
+                len=Math.max(len,i-map.get(sum-k));
+            }
+            map.putIfAbsent(sum,i); // to make sum-k smallest as possible so that k length can be maximum
+        }
+        return len;
+
+For Count->
+        HashMap<Integer, Integer> map=new HashMap<>();
+        int sum=0,count=0;;
+        for(int i=0;i<nums.length;i++)
+        {
+            sum+=nums[i];
+            if(sum==k)
+            {
+                count++;
+            }
+            if(map.containsKey(sum-k))
+            {
+                count+=map.get(sum-k);
+            }
+            map.put(sum,map.getOrDefault(sum,0)+1); // to get every possible subarray even small
+        }
+        return count;
+
+TC-O(NlogN)
+SC-O(N)
+
+Appr3:
+Two-Pointers(Only for Positive numbers)  
+Approach is simple as it only add until sum<=k and decrease for sum>k
+        long sum=0;
+        int si=0,ei=0,len=0,n=a.length;
+        while(si<a.length && ei<a.length)
+        {
+            if(ei<n)
+            {
+                sum+=a[ei++];
+            }  
+            while(si<=ei && sum>k)
+            {
+                sum-=a[si++];
+            }
+            if(sum==k)
+            {
+                len=Math.max(len,ei-si);
+            }
+        }
+        return len;
+Time Complexity: O(2*N), where N = size of the given array.
+Reason: The outer while loop i.e. the right pointer can move up to index n-1(the last index). Now, the inner while loop i.e. the left pointer can move up to the right pointer at most. So, every time the inner loop does not run for n times rather it can run for n times in total. So, the time complexity will be O(2*N) instead of O(N2).
+
+Space Complexity: O(1) as we are not using any extra space.
