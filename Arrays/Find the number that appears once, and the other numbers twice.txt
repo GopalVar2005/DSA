@@ -1,0 +1,22 @@
+Problem Statement: Given a non-empty array of integers arr, every element appears twice except for one. Find that single one.
+
+Appr1:
+use nested for loops
+TC-O(N2)
+SC-O(1)
+
+Appr2:
+use map
+TC-O(NlogM)->N-no. of elements, M-size of map(N/2+1)
+SC-O(M)
+
+Appr3:
+use xor to find the unique number
+TC-O(N)
+SC-O(1)
+        int xor=0;
+        for(int i:nums)
+        {
+            xor^=i;
+        }
+        return xor;
