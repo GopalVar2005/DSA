@@ -1,0 +1,76 @@
+Problem Statement: Given a Binary Tree, perform the boundary traversal of the tree. The boundary traversal is the process of visiting the boundary nodes of the binary tree in the anticlockwise direction, starting from the root.
+
+Appr:
+For left: jbtk left ho jao nhi to right
+For leaf: add leaf but not root bcs already added
+For right: jbtk right ho jao nhi to left
+    ArrayList<Integer> boundaryTraversal(Node node) {
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(node.left==null && node.right==null)
+        {
+            ans.add(node.data);
+            return ans;
+        }
+        ans.add(node.data);
+        left(node.left,ans);
+        leaf(node,ans);
+        right(node.right,ans);
+        return ans;
+    }
+    public void left(Node node, ArrayList<Integer> ans)
+    {
+        if(node==null)
+        {
+            return;
+        }
+        if(node.left==null && node.right==null)
+        {
+            return;
+        }
+        ans.add(node.data);
+        if(node.left!=null)
+        {
+            left(node.left,ans);
+        }
+        else
+        {
+            left(node.right,ans);
+        }
+    }
+    public void leaf(Node node, ArrayList<Integer> ans)
+    {
+        if(node==null)
+        {
+            return;
+        }
+        if(node.left==null && node.right==null)
+        {
+            ans.add(node.data);
+            return;
+        }
+        leaf(node.left,ans);
+        leaf(node.right,ans);
+    }
+    public void right(Node node, ArrayList<Integer> ans)
+    {
+        if(node==null)
+        {
+            return;
+        }
+        if(node.left==null && node.right==null)
+        {
+            return;
+        }
+        if(node.right!=null)
+        {
+            right(node.right,ans);
+        }
+        else
+        {
+            right(node.left,ans);
+        }
+        ans.add(node.data);
+    }
+
+Time Complexity	O(N)	Each node visited at most once
+Space Complexity	O(N)	Recursion stack up to height H + O(N) output list
