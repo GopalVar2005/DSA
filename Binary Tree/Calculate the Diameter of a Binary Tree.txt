@@ -1,0 +1,50 @@
+Problem Statement: Given the root of the Binary Tree, return the length of its diameter. The Diameter of a Binary Tree is the longest distance between any two nodes of that tree. This path may or may not pass through the root.
+
+Appr1:
+har node ka diameter nikalne ke liye root.left ki ht + root.right ki ht + 2
+public int diameterOfBinaryTree(TreeNode root) {
+        if(root==null)
+        {
+            return 0;
+        }
+        int left=diameterOfBinaryTree(root.left);
+        int right=diameterOfBinaryTree(root.right);
+        return Math.max(left,Math.max(right,ht(root.left)+ht(root.right)+2));
+    }
+    public int ht(TreeNode root)
+    {
+        if(root==null)
+        {
+            return -1;
+        }
+        int left=ht(root.left);
+        int right=ht(root.right);
+        return Math.max(left,right)+1;
+    }
+Time	O(N²)	Height recalculated for each node, leading to repeated traversals
+Space	O(H)	Recursion stack depth equals tree height
+
+Appr2:
+    class info
+    {
+        int ht=-1;
+        int dia=0;
+    }
+    public int diameterOfBinaryTree(TreeNode root) {
+        return find(root).dia;
+    }
+    public info find(TreeNode root)
+    {
+        info cur=new info();
+        if(root==null)
+        {
+            return cur;
+        }
+        info left=find(root.left);
+        info right=find(root.right);
+        cur.ht=Math.max(left.ht,right.ht)+1;
+        cur.dia=Math.max(left.dia,Math.max(right.dia,left.ht+right.ht+2));
+        return cur;
+    }
+Time	O(N)	Single traversal, computes height and diameter simultaneously
+Space	O(H)	Recursion stack space proportional to tree height
