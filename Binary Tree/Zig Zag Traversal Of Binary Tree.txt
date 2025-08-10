@@ -1,0 +1,71 @@
+Problem Statement: Given a Binary Tree, print the zigzag traversal of the Binary Tree. Zigzag traversal of a binary tree is a way of visiting the nodes of the tree in a zigzag pattern, alternating between left-to-right and right-to-left at each leve
+
+Appr1: Using list.add(index,element)
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans=new ArrayList<>();
+        if(root==null)
+        {
+            return ans;
+        }
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        boolean ltr=true;
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            List<Integer> ll=new ArrayList<>();
+            for(int i=0;i<size;i++)
+            {
+                TreeNode rf=q.remove();
+                ll.add((ltr?ll.size():0),rf.val);
+                if(rf.left!=null)
+                {
+                    q.add(rf.left);
+                }
+                if(rf.right!=null)
+                {
+                    q.add(rf.right);
+                }
+            }
+            ans.add(ll);
+            ltr=!ltr;
+        }
+        return ans;
+    }
+Time	O(N²) (worst case)	Inserting at the start of list on right-to-left levels requires shifting elements
+Space	O(N)	Queue + output list store all nodes
+
+Appr2: Using array
+    public void find(TreeNode root,List<List<Integer>> ans)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        boolean ltr=true;
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            Integer[] arr=new Integer[size];
+            for(int i=0;i<size;i++)
+            {
+                TreeNode rf=q.remove();
+                int idx=ltr?i:size-i-1;
+                arr[idx]=rf.val;
+                if(rf.left!=null)
+                {
+                    q.add(rf.left);
+                }
+                if(rf.right!=null)
+                {
+                    q.add(rf.right);
+                }
+            }
+            ltr=!ltr;
+            ans.add(Arrays.asList(arr));
+        }
+    }
+Time	O(N)	Each node processed once
+Space	O(N)	Queue + temporary array + output storage
