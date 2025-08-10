@@ -1,0 +1,34 @@
+Problem Statement: Given a Binary Tree, determine the maximum sum achievable along any path within the tree. A path in a binary tree is defined as a sequence of nodes where each pair of adjacent nodes is connected by an edge. Nodes can only appear once in the sequence, and the path is not required to start from the root. Identify and compute the maximum sum possible along any path within the given binary tree.
+
+Appr1:
+for every node, find withLeft, withRight, withBoth, withNone, max
+for further withLeft, withRight and withBoth we have to consider Max from withLeft, withRight, withNone
+for max-> consider myMax, left.max, right.max
+
+class info
+    {
+        int withLeft=0,withRight=0,withBoth=0,withNone=0,max=Integer.MIN_VALUE;
+    }
+    public int maxPathSum(TreeNode root) {
+        return find(root).max;
+    }
+    public info find(TreeNode root)
+    {
+        info cur=new info();
+        if(root==null)
+        {
+            return cur;
+        }
+        info left=find(root.left);
+        info right=find(root.right);
+        cur.withLeft=root.val+Math.max(left.withLeft,Math.max(left.withRight,left.withNone));
+        cur.withRight=root.val+Math.max(right.withLeft,Math.max(right.withRight,right.withNone));
+        cur.withBoth=root.val+Math.max(left.withLeft,Math.max(left.withRight,left.withNone))+Math.max(right.withLeft,Math.max(right.withRight,right.withNone));
+        cur.withNone=root.val;
+        int myMax=Math.max(cur.withLeft,Math.max(cur.withRight,Math.max(cur.withNone,cur.withBoth)));
+        cur.max=Math.max(myMax,Math.max(left.max,right.max));
+        return cur;
+    }
+
+TC-O(N)
+SC-O(H)
