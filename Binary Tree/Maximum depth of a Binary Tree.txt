@@ -1,0 +1,15 @@
+Problem Statement: Given the root of a Binary Tree, return the height of the tree. The height of the tree is equal to the number of nodes on the longest path from root to a leaf.
+
+    public int height(TreeNode root)
+    {
+        if(root==null)return 0;
+        int left=height(root.left);
+        int right=height(root.right);
+        return Math.max(left,right)+1;
+    }
+
+Time Complexity: O(N)
+
+Space Complexity: O(H)
+
+The maximum number of recursive calls stacked at once corresponds to the longest path from the root to a leaf, which is the height of the tree.
