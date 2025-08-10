@@ -1,0 +1,22 @@
+Problem Statement: Given two Binary Trees, return if true if the two trees are identical, otherwise return false.
+
+Appr:
+consider all the cases where we can not move forward first
+else solve forward
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p==null && q==null)
+        {
+            return true;
+        }
+        else if(p==null || q==null)
+        {
+            return false;
+        }
+        else if(p.val!=q.val)
+        {
+            return false;
+        }
+        boolean left=isSameTree(p.left,q.left);
+        boolean right=isSameTree(p.right,q.right);
+        return left && right;
+    }
