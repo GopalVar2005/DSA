@@ -1,0 +1,55 @@
+Problem Statement: Given a Binary Tree, return true if it is a Balanced Binary Tree else return false. A Binary Tree is balanced if, for all nodes in the tree, the difference between left and right subtree height is not more than 1.
+
+Appr1:
+->Balance tbhi hoga jb har node ka left balance ho right balance ho aur vo self bhi balance ho
+public boolean isBalanced(TreeNode root) {
+        if(root==null)
+        {
+            return true;
+        }
+        boolean left=isBalanced(root.left);
+        boolean right=isBalanced(root.right);
+        if(Math.abs(height(root.left)-height(root.right))<=1 && left && right)
+        {
+            return true;
+        }
+        return false;
+    }
+    public int height(TreeNode root)
+    {
+        if(root==null)
+        {
+            return 0;
+        }
+        int left=height(root.left);
+        int right=height(root.right);
+        return Math.max(left,right)+1;
+    }
+Time Complexity	O(N²)	Height recomputed at each node, leading to repeated subtree traversals
+Space Complexity	O(H)	Recursion stack depth
+
+Appr2:
+bar bar sbke liye height nhi nikalenge pichle store and use krlenge
+    class info
+    {
+        int ht=-1;
+        boolean balanced=true;
+    }
+    public boolean isBalanced(TreeNode root) {
+        return check(root).balanced;
+    }
+    public info check(TreeNode root)
+    {
+        if(root==null)
+        {
+            return new info();
+        }
+        info cur=new info();
+        info left=check(root.left);
+        info right=check(root.right);
+        cur.ht=Math.max(left.ht,right.ht)+1;
+        cur.balanced=left.balanced && right.balanced && Math.abs(left.ht-right.ht)<=1;
+        return cur;
+    }
+Time Complexity	O(N)	Each node visited once.
+Space Complexity	O(H)	Recursion stack depth equal to tree height.
