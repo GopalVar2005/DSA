@@ -1,0 +1,108 @@
+PREORDER:
+  public List<Integer> preorderTraversal(TreeNode root) {
+        if(root==null)return new ArrayList<>();
+        Stack<TreeNode> st=new Stack<>();
+        List<Integer> ans=new ArrayList<>();
+        st.push(root);
+        while(!st.isEmpty())
+        {
+            TreeNode rf=st.pop();
+            ans.add(rf.val);
+            if(rf.right!=null)
+            {
+                st.push(rf.right);
+            }
+            if(rf.left!=null)
+            {
+                st.push(rf.left);
+            }
+        }
+        return ans;
+    }
+
+INORDER:
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans=new ArrayList<>();
+        if(root==null)return ans;
+        Stack<TreeNode> st=new Stack<>();
+        TreeNode node=root;
+        while(true)
+        {
+            if(node!=null)
+            {
+                st.push(node);
+                node=node.left;
+            }
+            else
+            {
+                if(st.isEmpty())break;
+                TreeNode rf=st.pop();
+                ans.add(rf.val);
+                node=rf.right;
+            }
+        }
+        return ans;
+    }
+
+POSTORDER:
+USING 2 STACKS:
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ans=new ArrayList<>();
+        if(root==null)return new ArrayList<>();
+        Stack<TreeNode> st1=new Stack<>();
+        Stack<TreeNode> st2=new Stack<>();        
+        st1.push(root);
+        while(!st1.isEmpty())
+        {
+            TreeNode rf=st1.pop();
+            st2.push(rf);
+            if(rf.left!=null)
+            {
+                st1.push(rf.left);
+            }
+            if(rf.right!=null)
+            {
+                st1.push(rf.right);
+            }
+        }
+        while(!st2.isEmpty())
+        {
+            ans.add(st2.pop().val);
+        }
+        return ans;
+    }
+
+USING 1 STACK:
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ans=new ArrayList<>();
+        if(root==null)return ans;
+        Stack<TreeNode> st=new Stack<>();
+        TreeNode temp=null,cur=root;
+        while(cur!=null || !st.isEmpty())
+       {
+            if(cur!=null)
+            {
+                st.push(cur);
+                cur=cur.left;
+            }
+            else
+            {
+                temp=st.peek().right;
+                if(temp==null)
+                {
+                    temp=st.pop();
+                    ans.add(temp.val);
+                    while(!st.isEmpty() && temp==st.peek().right)
+                    {
+                        temp=st.pop();
+                        ans.add(temp.val);
+                    }
+                }
+                else
+                {
+                    cur=temp;
+                }
+            }
+       } 
+       return ans;
+    }
