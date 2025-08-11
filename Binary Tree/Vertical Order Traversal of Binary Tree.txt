@@ -1,0 +1,106 @@
+Problem Statement: Given a Binary Tree, return the Vertical Order Traversal of it starting from the Leftmost level to the Rightmost level. If there are multiple nodes passing through a vertical line, then they should be printed as they appear in level order traversal of the tree.
+
+Appr: BFS
+class Solution {
+    // so that we can decide which node to come where
+    class info
+    {
+        TreeNode node;
+        int col; // vertical
+        int row; // level
+        public info(TreeNode node, int col, int row)
+        {
+            this.node=node;
+            this.col=col;
+            this.row=row;
+        }
+    }
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        // vertical->level->values(sorted)
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map=new TreeMap<>();
+        // BFS to traverse the tree
+        Queue<info> q=new LinkedList<>();
+        q.add(new info(root, 0, 0));
+        while(!q.isEmpty())
+        {
+            info rf=q.remove();
+            TreeNode node=rf.node;
+            int col=rf.col;
+            int row=rf.row;
+
+            // so it does not overwrite old value
+            map.putIfAbsent(col, new TreeMap<>());
+            map.get(col).putIfAbsent(row,new PriorityQueue<>());
+            map.get(col).get(row).add(node.val);
+
+            if(node.left!=null)
+            {
+                q.add(new info(node.left, col-1, row+1));
+            }
+            if(node.right!=null)
+            {
+                q.add(new info(node.right, col+1, row+1));
+            }
+        }
+        // structuring answer
+        List<List<Integer>> ans=new ArrayList<>();
+        for(TreeMap<Integer, PriorityQueue<Integer>> level:map.values())
+        {
+            List<Integer> ll = new ArrayList<>();
+            for(PriorityQueue<Integer> values:level.values())
+            {
+                while(!values.isEmpty())
+                {
+                    ll.add(values.remove());
+                }
+            }
+            ans.add(ll);
+        }
+        return ans;
+    }
+}
+
+Appr: DFS
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        // vertical->level->values(sorted)
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map=new TreeMap<>();
+
+        // DFS to traverse the tree
+        dfs(root, 0, 0, map);
+
+        // structuring answer
+        List<List<Integer>> ans=new ArrayList<>();
+        for(TreeMap<Integer, PriorityQueue<Integer>> level:map.values())
+        {
+            List<Integer> ll = new ArrayList<>();
+            for(PriorityQueue<Integer> values:level.values())
+            {
+                while(!values.isEmpty())
+                {
+                    ll.add(values.remove());
+                }
+            }
+            ans.add(ll);
+        }
+        return ans;
+    }
+    public void dfs(TreeNode root, int col, int row, TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        // so it does not overwrite old value
+        map.putIfAbsent(col, new TreeMap<>());
+        map.get(col).putIfAbsent(row,new PriorityQueue<>());
+        map.get(col).get(row).add(root.val);
+
+        dfs(root.left, col-1, row+1, map);
+        dfs(root.right, col+1, row+1, map);
+    }
+}
+
+Approach	        Time Complexity	        Space Complexity
+BFS	              O(n log n)	            O(n) for map + O(n) for queue
+DFS	              O(n log n)	            O(n) for map + O(h) recursion stack
