@@ -1,0 +1,64 @@
+Problem Statement: Given a Binary Tree, return its right and left views.
+
+The Right View of a Binary Tree is a list of nodes that can be seen when the tree is viewed from the right side. The Left View of a Binary Tree is a list of nodes that can be seen when the tree is viewed from the left side.
+
+Appr:
+Using BFS
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> ans=new ArrayList<>();
+        if(root==null)
+        {
+            return ans;
+        }
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            for(int i=0;i<size;i++)
+            {
+                TreeNode rf=q.remove();
+                if(i==size-1)
+                {
+                    ans.add(rf.val);
+                }
+                if(rf.left!=null)
+                {
+                    q.add(rf.left);
+                }
+                if(rf.right!=null)
+                {
+                    q.add(rf.right);
+                }
+            }
+        }
+        return ans;
+    }
+TC-O(N)
+SC-O(N)
+
+Appr:
+Using DFS
+    public List<Integer> rightSideView(TreeNode root) {
+        max=-1;
+        List<Integer> ans=new ArrayList<>();
+        add(root,0,ans);
+        return ans;
+    }
+    int max=-1;
+    public void add(TreeNode root, int cur, List<Integer> ans)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        if(cur>max)
+        {
+            ans.add(root.val);
+            max=Math.max(cur,max);
+        }
+        add(root.right, cur+1, ans);
+        add(root.left, cur+1, ans);
+    }
+TC-O(N)
+SC-O(H)
