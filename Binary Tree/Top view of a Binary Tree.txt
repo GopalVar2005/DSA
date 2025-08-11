@@ -1,0 +1,46 @@
+Problem Statement: Given a Binary Tree, return its Top View. The Top View of a Binary Tree is the set of nodes visible when we see the tree from the top.
+
+Appr:
+class Solution {
+    // to decide which node comes where
+    static class info
+    {
+        Node node;
+        int col;
+        public info(Node node, int col)
+        {
+            this.node=node;
+            this.col=col;
+        }
+    }
+    static ArrayList<Integer> topView(Node root) {
+        // bcs we only need 1 node per vertical
+        TreeMap<Integer, Integer> map=new TreeMap<>();
+        // BFS 
+        Queue<info> q=new LinkedList<>();
+        q.add(new info(root, 0));
+        while(!q.isEmpty())
+        {
+            info rf=q.remove();
+            Node node=rf.node;
+            int col=rf.col;
+            
+            map.putIfAbsent(col, node.data);
+            
+            if(node.left!=null)
+            {
+                q.add(new info(node.left, col-1));
+            }
+            if(node.right!=null)
+            {
+                q.add(new info(node.right, col+1));
+            }
+        }
+        return new ArrayList<>(map.values());
+        
+    }
+}
+
+TC: O(n log n)
+
+SC: O(n)
