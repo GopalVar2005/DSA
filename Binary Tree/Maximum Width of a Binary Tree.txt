@@ -1,0 +1,48 @@
+Problem Statement: Given a Binary Tree, return its maximum width. The maximum width of a Binary Tree is the maximum diameter among all its levels. The width or diameter of a level is the number of nodes between the leftmost and rightmost nodes.
+
+Appr: Maintian idx for every given node so we can find the gap btw them and find max
+    class info
+    {
+        TreeNode node;
+        int idx;
+        public info(TreeNode node, int idx)
+        {
+            this.node=node;
+            this.idx=idx;
+        }
+    }
+    public int widthOfBinaryTree(TreeNode root) {
+        int width=0;
+        if(root==null)
+        {
+            return width;
+        }
+        Queue<info> q=new LinkedList<>();
+        q.add(new info(root, 0));
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            info start=q.peek();
+            info end=null;
+            for(int i=0;i<size;i++)
+            {
+                end=q.remove();
+                if(end.node.left!=null)
+                {
+                    q.add(new info(end.node.left, 2*end.idx+1));
+                }
+                if(end.node.right!=null)
+                {
+                    q.add(new info(end.node.right, 2*end.idx+2));
+                }
+            }
+            width=Math.max(width, end.idx-start.idx+1);
+        }
+        return width;
+    }
+
+Time Complexity:
+O(N) — each node visited exactly once.
+
+Space Complexity:
+O(N) — queue can store up to ~half the nodes at the largest level.
