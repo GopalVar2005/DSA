@@ -1,0 +1,25 @@
+Problem Statement: Given a Binary Tree, convert the value of its nodes to follow the Children Sum Property. The Children Sum Property in a binary tree states that for every node, the sum of its children's values (if they exist) should be equal to the node's value. If a child is missing, it is considered as having a value of 0
+
+    public boolean isSumProperty(Node root) {
+        //  code here
+        if(root==null)
+        {
+            return true;
+        }
+        if(root.left==null && root.right==null)
+        {
+            return true;
+        }
+        boolean left=isSumProperty(root.left);
+        boolean right=isSumProperty(root.right);
+        int leftData=root.left==null?0:root.left.data;
+        int rightData=root.right==null?0:root.right.data;
+        if(leftData+rightData==root.data && left && right)
+        {
+            return true;
+        }
+        return false;
+    }
+
+Time (TC)	O(N) — every node visited once
+Space (SC)	O(H) — recursion stack
