@@ -1,0 +1,35 @@
+Problem Statement: Given a Binary Tree and a reference to a root belonging to it. Return the path from the root node to the given leaf node.
+No two nodes in the tree have the same data value.
+It is assured that the given node is present and a path always exists.
+
+Appr:
+    public static ArrayList<ArrayList<Integer>> Paths(Node root) {
+        // code here
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        find(root,ans,new ArrayList<>());
+        return ans;
+    }
+    public static void find(Node root, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> ll)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        if(root.left==null && root.right==null)
+        {
+            ll.add(root.data);
+            ans.add(new ArrayList<>(ll));
+            ll.remove(ll.size()-1);
+            return;
+        }
+        ll.add(root.data);
+        find(root.left, ans, ll);
+        find(root.right, ans, ll);
+        ll.remove(ll.size()-1);
+    }
+
+Time Complexity: 
+O(N⋅H) → Balanced: O(N log N), Skewed: O(N), Very bushy: O(N²)
+
+Space Complexity: 
+O(L⋅H)+O(H) → Balanced: O(N log N), Skewed: O(N), Very bushy: O(N²)
