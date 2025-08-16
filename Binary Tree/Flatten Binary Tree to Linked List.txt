@@ -1,0 +1,34 @@
+Problem Statement: Given a Binary Tree, convert it to a Linked List where the linked list nodes follow the same order as the pre-order traversal of the binary tree.
+Use the right pointer of the Binary Tree as the ‘next’ pointer for the linked list and set the left pointer to null. Do this in place and do not create extra nodes.
+
+Appr: 
+Preorder ki form ma lane ke liye main conditions:-
+1. bas right child ho to : uska right Tail return krdo aage kaam krne ke liye
+2. bas left child ho to : usko root ke right ma lgake left Tail return krdo
+3. dono ho to : left Tail ma root ke right ko lgake usse vapas root ke right ma lgado aur right Tail return krdo
+
+    public void flatten(TreeNode root) {
+        create(root);
+    }
+    public TreeNode create(TreeNode root)
+    {
+        if(root==null)
+        {
+            return null;
+        }
+        if(root.left==null && root.right==null)
+        {
+            return root;
+        }
+        TreeNode leftTail=create(root.left);
+        TreeNode rightTail=create(root.right);
+        if(root.left!=null)
+        {
+            leftTail.right=root.right;
+            root.right=root.left;
+            root.left=null;
+        }
+        return rightTail!=null?rightTail:leftTail;
+    }
+Time (TC)	O(N) — visit each node once
+Space (SC)	O(H) recursion stack → O(log N) (balanced), O(N) (skewed)
