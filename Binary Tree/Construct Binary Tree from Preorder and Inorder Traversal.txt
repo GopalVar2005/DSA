@@ -1,0 +1,33 @@
+Problem Statement: Given the Preorder and Inorder traversal of a Binary Tree, construct the Unique Binary Tree represented by them.
+
+Appr:
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        idx=0;
+        return create(preorder, inorder, 0, inorder.length-1);        
+    }
+    int idx=0;
+    public TreeNode create(int[] pre, int[] in, int inStart, int inEnd)
+    {
+        if(inEnd<inStart || idx>=pre.length)
+        {
+            return null;
+        }
+        TreeNode root=new TreeNode(pre[idx++]);
+        int inidx=search(root.val, in, inStart, inEnd);
+        root.left=create(pre, in, inStart, inidx-1);
+        root.right=create(pre, in, inidx+1, inEnd);
+        return root;
+    }
+    public int search(int val, int[] in, int inStart, int inEnd)
+    {
+        for(int i=inStart;i<=inEnd;i++)
+        {
+            if(in[i]==val)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+Time (TC)	O(N²) — due to searching inorder for each node
+Space (SC)	O(H) — recursion stack
