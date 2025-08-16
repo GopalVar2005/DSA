@@ -1,0 +1,34 @@
+Problem Statement: Given the Postorder and Inorder traversal of a Binary Tree, construct the Unique Binary Tree represented by them.
+
+Appr:
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        idx=postorder.length-1;
+        return create(postorder, inorder, 0, inorder.length-1);        
+    }
+    int idx;
+    public TreeNode create(int[] post, int[] in, int inStart, int inEnd)
+    {
+        if(inEnd<inStart || idx<0)
+        {
+            return null;
+        }
+        TreeNode root=new TreeNode(post[idx--]);
+        int inidx=search(root.val, in, inStart, inEnd);
+        root.right=create(post, in, inidx+1, inEnd);
+        root.left=create(post, in, inStart, inidx-1);
+        return root;
+    }
+    public int search(int val, int[] in, int inStart, int inEnd)
+    {
+        for(int i=inStart;i<=inEnd;i++)
+        {
+            if(in[i]==val)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+Time (TC)	O(N²) — due to search for each node
+Space (SC)	O(H) — recursion stack
