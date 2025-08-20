@@ -1,0 +1,29 @@
+Problem Statement: Given an array of integers arr[] and an integer target.
+1st variant: Return YES if there exist two numbers such that their sum is equal to the target. Otherwise, return NO.
+2nd variant: Return indices of the two numbers such that their sum is equal to the target. Otherwise, we will return {-1, -1}.
+Note: You are not allowed to use the same element twice. Example: If the target is equal to 6 and num[1] = 3, then nums[1] + nums[1] = target is not a solution.
+
+Appr1: Use Nested loops
+TC-O(N2)
+SC-O(1)
+
+Appr2: Use HashMap
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            //map.put(nums[i],i);
+            if(map.containsKey(target-nums[i]))
+            {
+                return new int[]{map.get(target-nums[i]),i};
+            }
+            map.put(nums[i],i);
+        }
+        return new int[]{0,0};
+    }
+Time Complexity: O(n)
+Space Complexity: O(n)
+
+Appr3: Sort and apply Two-Pointers
+Time Complexity: O(N log N)
+Space Complexity: O(1) (if array is primitive & sorted in-place), otherwise O(N)
