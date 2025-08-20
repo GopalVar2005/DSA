@@ -1,8 +1,66 @@
 1. XOR
 -> Use xor when you have to deal with duplicates
+        // 0 1 3
+        // 0 1 2 3
+        int xor1=0,xor2=0;
+        int n=nums.length;
+        for(int i=0;i<n;i++)
+        {
+            xor1^=nums[i];
+            xor2^=i;
+        }
+        xor2^=n;
+        return xor1^xor2;
+TC-O(N)
+SC-O(1)
 
 2. curSum-k Map
 -> Use for subarray sum equals k
+There are two ways in which we can find subarray sum==k
+1. sum == k
+2. subarray sum = sum-k
+...........
+[sum-k][k]
+[   sum   ]
+
+For Length->
+        HashMap<Integer, Integer> map=new HashMap<>();
+        int sum=0,len=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            sum+=arr[i];
+            if(sum==k)
+            {
+                len=Math.max(len,i+1);
+            }
+            if(map.containsKey(sum-k))
+            {
+                len=Math.max(len,i-map.get(sum-k));
+            }
+            map.putIfAbsent(sum,i); // to make sum-k smallest as possible so that k length can be maximum
+        }
+        return len;
+
+For Count->
+        HashMap<Integer, Integer> map=new HashMap<>();
+        int sum=0,count=0;;
+        for(int i=0;i<nums.length;i++)
+        {
+            sum+=nums[i];
+            if(sum==k)
+            {
+                count++;
+            }
+            if(map.containsKey(sum-k))
+            {
+                count+=map.get(sum-k);
+            }
+            map.put(sum,map.getOrDefault(sum,0)+1); // to get every possible subarray even small
+        }
+        return count;
+
+TC-O(NlogN)
+SC-O(N)
 
 3. Recursion
 -> when doing recursion consider all edge cases first, else your logic will not run
