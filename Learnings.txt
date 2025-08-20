@@ -64,3 +64,5 @@ SC-O(N)
 
 3. Recursion
 -> when doing recursion consider all edge cases first, else your logic will not run
+
+4. Insertion time of HashMap-O(1)
