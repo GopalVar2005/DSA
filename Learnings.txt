@@ -66,3 +66,36 @@ SC-O(N)
 -> when doing recursion consider all edge cases first, else your logic will not run
 
 4. Insertion time of HashMap-O(1)
+
+5. Dutch National flag algorithm. 
+  0 - (low-1) -> 0
+  low - (mid-1) -> 1
+  mid - (high) -> unsorted
+  (high+1) - (n-1) -> 2
+    public void sortColors(int[] nums) {
+        int low=0, mid=0, high=nums.length-1;
+        while(mid<=high)
+        {
+            if(nums[mid]==0)
+            {
+                int temp=nums[mid];
+                nums[mid]=nums[low];
+                nums[low]=temp;
+                low++;
+                mid++;
+            }
+            else if(nums[mid]==1)
+            {
+                mid++;
+            }
+            else
+            {
+                int temp=nums[mid];
+                nums[mid]=nums[high];
+                nums[high]=temp;
+                high--;
+            }
+        }
+    }
+TC-O(N)
+SC-O(1)
