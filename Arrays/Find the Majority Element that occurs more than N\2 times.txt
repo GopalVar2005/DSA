@@ -1,0 +1,32 @@
+Problem Statement: Given an array of N integers, write a program to return an element that occurs more than N/2 times in the given array. You may consider that such an element always exists in the array.
+
+Appr1: Nested Loops
+TC-O(N2)
+SC-O(1)
+
+Appr2: Hashmap
+TC-O(N)
+SC-O(N)
+
+Appr3: Moore's Voting Algorithm
+-> jiske vote jyada vo jetega
+        int element=0,count=0;
+        for(int num:nums)
+        {
+            if(count==0) // koi bhi power ma nhi ha(jo bhi mile usko candidate bnado)
+            {
+                element=num;
+                count++;
+            }
+            else if(element==num) // iske chance bd gye
+            {
+                count++;
+            }
+            else if(element!=num) // aur bhi koi ha (iske chance gat gye) 
+            {
+                count--;
+            }
+        }      
+        return element;
+TC-O(N)
+SC-O(1)
