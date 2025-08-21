@@ -1,0 +1,22 @@
+Problem Statement: Given an integer array arr, find the contiguous subarray (containing at least one number) which
+has the largest sum and returns its sum and prints the subarray.
+
+Appr1: Nested Loops
+TC-O(N2)
+SC-O(1)
+
+Appr2: Kadane's Algorithm
+A subarray with a sum less than 0 will always reduce our answer and so this type of subarray cannot be a part of the subarray with maximum sum.
+        int max=Integer.MIN_VALUE, sum=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            sum+=nums[i];
+            max=Math.max(max, sum);
+            if(sum<0)
+            {
+                sum=0;
+            }
+        }
+        return max;
+TC-O(N)
+SC-O(1)
