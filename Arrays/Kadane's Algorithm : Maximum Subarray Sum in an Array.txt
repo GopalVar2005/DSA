@@ -20,3 +20,34 @@ A subarray with a sum less than 0 will always reduce our answer and so this type
         return max;
 TC-O(N)
 SC-O(1)
+
+Follow-up question:- There might be more than one subarray with the maximum sum. We need to print any of them.
+Appr:
+Our approach is to store the starting index and the ending index of the subarray. Thus we can easily get the subarray afterward without actually storing the subarray elements.
+The subarray always starts at the particular index where the sum variable is equal to 0, and at the ending index, the sum always crosses the previous maximum sum
+
+    public static long maxSubarraySum(int[] arr, int n) {
+        long maxi = Long.MIN_VALUE; // maximum sum
+        long sum = 0;
+
+        int start = 0;
+        int ansStart = -1, ansEnd = -1;
+        for (int i = 0; i < n; i++) {
+
+            if (sum == 0) start = i; // starting index
+
+            sum += arr[i];
+
+            if (sum > maxi) {
+                maxi = sum;
+
+                ansStart = start;
+                ansEnd = i;
+            }
+
+            // If sum < 0: discard the sum calculated
+            if (sum < 0) {
+                sum = 0;
+            }
+        }
+
