@@ -1,0 +1,90 @@
+Variety-1
+
+Problem Statement:
+
+There’s an array ‘A’ of size ‘N’ with an equal number of positive and negative elements. Without altering the relative order of positive and negative elements, you must return an array of alternately positive and negative values.
+
+Appr1: make 2 diff lists of posi and neg then merge them
+TC-O(N)+O(N/2)+O(N/2)
+SC-O(N)+O(N/2)+O(N/2)
+
+Appr2: use 2 var for posIndex and negIndex with single traverse
+        int n=nums.length;
+        int[] ans=new int[n];
+        int posi=0, neg=1;
+        for(int i=0;i<n;i++)
+        {
+            int num=nums[i];
+            if(num>0)
+            {
+                ans[posi]=num;
+                posi+=2;
+            } 
+            else
+            {
+                ans[neg]=num;
+                neg+=2;
+            }
+        }
+        return ans;
+TC-O(N)
+SC-O(N)
+
+Variety-2
+Problem Statement:
+There’s an array ‘A’ of size ‘N’ with positive and negative elements (not necessarily equal). Without altering the relative order of positive and negative elements, you must return an array of alternately positive and negative values. The leftover elements should be placed at the very end in the same order as in array A.
+
+Appr: Positive and Negative ko alg-alg krlo phir jbtk dono balance ma ha alternate kro aur phir jo extra ho usse daldo
+
+    public static ArrayList<Integer> RearrangebySign(ArrayList<Integer> A, int n) {
+        // Define 2 ArrayLists, one for storing positive 
+        // and other for negative elements of the array.
+        ArrayList<Integer> pos = new ArrayList<>();
+        ArrayList<Integer> neg = new ArrayList<>();
+
+        // Segregate the array into positives and negatives.
+        for (int i = 0; i < n; i++) {
+            if (A.get(i) > 0)
+                pos.add(A.get(i));
+            else
+                neg.add(A.get(i));
+        }
+
+        // If positives are lesser than the negatives.
+        if (pos.size() < neg.size()) {
+
+            // First, fill array alternatively till the point 
+            // where positives and negatives are equal in number.
+            for (int i = 0; i < pos.size(); i++) {
+                A.set(2 * i, pos.get(i));
+                A.set(2 * i + 1, neg.get(i));
+            }
+
+            // Fill the remaining negatives at the end of the array.
+            int index = pos.size() * 2;
+            for (int i = pos.size(); i < neg.size(); i++) {
+                A.set(index, neg.get(i));
+                index++;
+            }
+        }
+
+        // If negatives are lesser than the positives.
+        else {
+            // First, fill array alternatively till the point 
+            // where positives and negatives are equal in number.
+            for (int i = 0; i < neg.size(); i++) {
+                A.set(2 * i, pos.get(i));
+                A.set(2 * i + 1, neg.get(i));
+            }
+
+            // Fill the remaining positives at the end of the array.
+            int index = neg.size() * 2;
+            for (int i = neg.size(); i < pos.size(); i++) {
+                A.set(index, pos.get(i));
+                index++;
+            }
+        }
+        return A;
+    }
+TC-O(N)
+SC-O(N)
