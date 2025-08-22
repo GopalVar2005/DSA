@@ -1,0 +1,44 @@
+Problem Statement: You are given an array of prices where prices[i] is the price of a given stock on an ith day.
+
+Appr1: Use Nested Loops
+TC-O(N2)
+SC-O(1)
+
+Appr2: Precompute max at right so we can find max profit for all i
+        // 7,1,5,3,6,4
+        // 6,6,6,6,4,-1
+        // 5
+
+        // 7,6,4,3,1
+        // 6,4,3,1,-1
+        // 0
+
+        // 2,4,1
+        // 4,1,-1
+        // 2
+        int n=prices.length;
+        int[] right=new int[n];
+        right[n-1]=-1;
+        for(int i=n-2;i>=0;i--)
+        {
+            right[i]=Math.max(prices[i+1], right[i+1]);
+        }
+        int profit=0;
+        for(int i=0;i<prices.length;i++)
+        {
+            profit=Math.max(profit, right[i]-prices[i]);
+        }
+        return profit;
+TC-O(N)
+SC-O(N)
+
+Appr3: Use Single loop to both compute minPrice yet and maxProfit generated for all i considering the current minPrice
+        int minPrice=Integer.MAX_VALUE, maxPro=0;
+        for(int i:prices)
+        {
+            minPrice=Math.min(minPrice, i);
+            maxPro=Math.max(maxPro, i-minPrice);
+        }
+        return maxPro;
+TC-O(N)
+SC-O(1)
