@@ -6,6 +6,7 @@ Preorder ki form ma lane ke liye main conditions:-
 1. bas right child ho to : uska right Tail return krdo aage kaam krne ke liye
 2. bas left child ho to : usko root ke right ma lgake left Tail return krdo
 3. dono ho to : left Tail ma root ke right ko lgake usse vapas root ke right ma lgado aur right Tail return krdo
+4. dono na ho to : usi root ko aage bhjdp kaam krne ke liye
 
     public void flatten(TreeNode root) {
         create(root);
