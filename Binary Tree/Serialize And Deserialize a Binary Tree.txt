@@ -1,0 +1,59 @@
+Problem Statement: Given a Binary Tree, design an algorithm to serialise and deserialise it. There is no restriction on how the serialisation and deserialization takes place. But it needs to be ensured that the serialised binary tree can be deserialized to the original tree structure. Serialisation is the process of translating a data structure or object state into a format that can be stored or transmitted (for example, across a computer network) and reconstructed later. The opposite operation, that is, extracting a data structure from stored information, is deserialization.
+
+Appr:
+Serialization mtlb tree ko string ma convert krna 
+Use Preorder to store the values of tree it null store null
+
+Deserialization mtlb string ko tree ma convert krna
+Use a global idx taaki recursion calls ma index maintain rhe
+if(idx bhar nikal jay OR current value null ho tree ma null daldo)
+else(kyuki preorder use kia ha phle root baaki left-right recursion)
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb=new StringBuilder();
+        serial(root, sb);
+        return sb.toString();
+    }
+    public void serial(TreeNode root, StringBuilder sb)
+    {
+        if(root==null)
+        {
+            sb.append("null,");
+            return;
+        }
+        sb.append(root.val).append(',');
+        serial(root.left, sb);
+        serial(root.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data.isEmpty())
+        {
+            return null;
+        }
+        String[] arr=data.split(",");
+        return deserial(arr);
+    }
+    int idx=0;
+    public TreeNode deserial(String[] arr)
+    {
+        if(idx>=arr.length)
+        {
+            return null;
+        }
+        String s=arr[idx++];
+        if(s.equals("null"))
+        {
+            return null;
+        }
+        TreeNode node=new TreeNode(Integer.parseInt(s));
+        node.left=deserial(arr);
+        node.right=deserial(arr);
+        return node;
+    }
+    // 1 2 null null 3 4 null null 5 null null
+
+Time Complexity: O(n)
+Space Complexity: O(n) (includes string/array + recursion stack; recursion is O(h), where h = tree height)
