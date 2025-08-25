@@ -1,0 +1,21 @@
+Problem Statement: Given the root of a Binary Search Tree. The task is to find the minimum valued element in this given BST.
+
+class Solution {
+    // Function to find the minimum element in the given BST.
+    int minValue(Node root) {
+        // code here
+        int val=-1;
+        while(root!=null)
+        {
+            val=root.data;
+            root=root.left;
+        }
+        return val;
+    }
+}
+
+Exact complexity: O(h) (depends on height).
+Average / Balanced BST: O(log N).
+Worst case / Skewed BST: O(N).
+
+SC-O(1)
