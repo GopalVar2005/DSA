@@ -1,0 +1,60 @@
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys strictly less than the node's key.
+The right subtree of a node contains only nodes with keys strictly greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+Appr:niche se(false mila to sidhe upr dete rho) har node ke liye check krte jao shi to true nhi to false
+
+    public boolean isValidBST(TreeNode root) {
+        if(root==null)
+        {
+            return true;
+        }
+        if(root.left==null && root.right==null)
+        {
+            return true;
+        }
+        boolean left = isValidBST(root.left);
+        boolean right = isValidBST(root.right);
+        if(!left || !right)
+        {
+            return false;
+        }
+        long leftVal=Long.MIN_VALUE;
+        if(root.left!=null)
+        {
+            leftVal=max(root.left);
+        }
+        long rightVal=Long.MAX_VALUE;
+        if(root.right!=null)
+        {
+            rightVal=min(root.right);
+        }
+        if(leftVal<root.val && root.val<rightVal)
+        {
+            return true;
+        }
+        return false;
+    }
+    public int max(TreeNode root)
+    {
+        while(root.right!=null)
+        {
+            root=root.right;
+        }
+        return root.val;
+    }
+    public int min(TreeNode root)
+    {
+        while(root.left!=null)
+        {
+            root=root.left;
+        }
+        return root.val;
+    }
+
+TC-O(N2) -> min max agr n tk chle
+SC-O(N) -> min max for skewed tree
