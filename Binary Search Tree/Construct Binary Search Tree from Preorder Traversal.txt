@@ -1,0 +1,54 @@
+Given an array of integers preorder, which represents the preorder traversal of a BST (i.e., binary search tree), construct the tree and return its root
+
+Appr1: Use a for loop and insert all values 
+    public TreeNode bstFromPreorder(int[] preorder) {
+        TreeNode root=new TreeNode(preorder[0]);
+        for(int i=1;i<preorder.length;i++)
+        {
+            insert(root, preorder[i]);
+        }
+        return root;
+    }
+    public TreeNode insert(TreeNode root, int val)
+    {
+        if(root==null)
+        {
+            return new TreeNode(val);
+        }
+        if(root.val<val)
+        {
+            root.right=insert(root.right, val);
+        }
+        else
+        {
+            root.left=insert(root.left, val);
+        }
+        return root;
+    }   
+TC-O(N2)
+SC-O(N)
+
+Appr2: Maintain a range to return from wrong paths and insert values accordingly
+
+    public TreeNode bstFromPreorder(int[] preorder) {
+        idx=0;
+        return create(preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    int idx=0;
+    public TreeNode create(int[] preorder, int min, int max)
+    {
+        if(idx>=preorder.length)
+        {
+            return null;
+        }
+        if(preorder[idx]<min || max<preorder[idx])
+        {
+            return null;
+        }
+        TreeNode root=new TreeNode(preorder[idx++]);
+        root.left=create(preorder, min, root.val);
+        root.right=create(preorder, root.val, max);
+        return root;
+    }
+TC-O(N)
+SC-O(N)
