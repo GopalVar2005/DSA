@@ -122,3 +122,6 @@ SC-O(1)
         return element;
 TC-O(N)
 SC-O(1)
+
+7. BST min-max logic 
+-> jab bhi aap BST construct kr rhe ha using Recursion never ever forget about the range
