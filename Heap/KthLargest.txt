@@ -1,0 +1,35 @@
+Given an integer array nums and an integer k, return the kth largest element in the array.
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+Can you solve it without sorting?
+
+Appr1: Use MaxHeap
+TC-O(NlogN)
+SC-O(N)
+
+Appr2: Sorting
+TC-O(NlogN)
+SC-O(1)
+
+Appr3: Use MinHeap  
+k size ke min heap ma top element kth largest hi hoga
+bas usko nikalke aage agr bada mile to vo possible ans ho skta ha else skip
+End ma jo heap bchega vo maximum elements ka heap hoga jiska top element kth largest hoga
+
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> q=new PriorityQueue<>();
+        for(int i=0;i<k;i++)
+        {
+            q.add(nums[i]);
+        }
+        for(int i=k;i<nums.length;i++)
+        {
+            if(nums[i]>q.peek())
+            {
+                q.remove();
+                q.add(nums[i]);
+            }
+        }
+        return q.peek();
+    }
+TC-O(NlogK)
+SC-O(K)
