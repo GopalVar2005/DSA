@@ -1,0 +1,42 @@
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+Merge all the linked-lists into one sorted linked-list and return it.
+
+Appr1: sbkuch priority queue ma daldo phir ans bnado
+TC-O(NlogN)
+SC-O(N)
+
+Appr2: saare listnodes ke headers ko priority queue ma daldo phir vha se min ko nikalte rho aage null na ho to add bhi krdo 
+NOTE- yha address compare hoga to comparator ka use krke unki values ko compare kro
+MIN-HEAP o1.val-o2.val
+MAX-HEAP o2.val-o1.val
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> q=new PriorityQueue<>(new Comparator<ListNode>(){
+            public int compare(ListNode o1, ListNode o2)
+            {
+                return o1.val-o2.val;
+            }
+        });
+        for(ListNode i:lists)
+        {
+            if(i!=null)
+            {
+                q.add(i);
+            }
+        }
+        ListNode dummy=new ListNode();
+        ListNode temp=dummy;
+        while(!q.isEmpty())
+        {
+            ListNode rv=q.remove();
+            dummy.next=rv;
+            dummy=dummy.next;
+            if(rv.next!=null)
+            {
+                q.add(rv.next);
+            }
+        }
+        return temp.next;
+    }
+TC-O(K*Nlog(K))
+SC-O(k) not considering output space
