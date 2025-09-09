@@ -78,7 +78,7 @@ Appr2: better
         }
         info left=find(root.left);
         info right=find(root.right);
-        self.min=Math.min(left.min, Math.min(right.min, root.val));
+        self.min=Math.min(left.min, Math.min(right.min, root.val));    // yha left avoid kr skte kyuki agr bst ha to left hi hoga
         self.max=Math.max(left.max, Math.max(right.max, root.val));
         self.isBst=left.isBst && right.isBst && (left.max<root.val && root.val<right.min);
         return self;
