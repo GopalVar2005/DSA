@@ -6,7 +6,7 @@ The left subtree of a node contains only nodes with keys strictly less than the 
 The right subtree of a node contains only nodes with keys strictly greater than the node's key.
 Both the left and right subtrees must also be binary search trees.
 
-Appr:niche se(false mila to sidhe upr dete rho) har node ke liye check krte jao shi to true nhi to false
+Appr1:niche se(false mila to sidhe upr dete rho) har node ke liye check krte jao shi to true nhi to false
 
     public boolean isValidBST(TreeNode root) {
         if(root==null)
@@ -58,3 +58,28 @@ Appr:niche se(false mila to sidhe upr dete rho) har node ke liye check krte jao 
 
 TC-O(N2) -> min max agr n tk chle
 SC-O(N) -> min max for skewed tree
+
+Appr2: better
+    class info
+    {
+        boolean isBst=true;
+        Long min=Long.MAX_VALUE;
+        Long max=Long.MIN_VALUE;
+    }
+    public boolean isValidBST(TreeNode root) {
+        return find(root).isBst;
+    }
+    public info find(TreeNode root)
+    {
+        info self=new info();
+        if(root==null)
+        {
+            return self;
+        }
+        info left=find(root.left);
+        info right=find(root.right);
+        self.min=Math.min(left.min, Math.min(right.min, root.val));
+        self.max=Math.max(left.max, Math.max(right.max, root.val));
+        self.isBst=left.isBst && right.isBst && (left.max<root.val && root.val<right.min);
+        return self;
+    }
