@@ -1,0 +1,46 @@
+Problem Statement:  Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+You must write an algorithm with O(log n) runtime complexity.
+
+Appr1: For loop
+agr num mil jay to return vrna jo usse just chota ha uski idx+1 else 0 sb bde ha vo shuru ma lgega
+        int idx=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]==target)
+            {
+                return i;
+            }
+            if(nums[i]<target)
+            {
+                idx=i+1;
+            }
+        }
+        return idx;
+TC-O(N)
+SC-O(1)
+
+Appr2: use binary search as array is sorted
+        int lo=0;
+        int hi=nums.length-1;
+        int idx=-1;
+        while(lo<=hi)
+        {
+            int mid=lo+(hi-lo)/2;
+            if(nums[mid]==target)
+            {
+                return mid;
+            }
+            else if(nums[mid]<target)
+            {
+                idx=mid+1;
+                lo=mid+1;
+            }
+            else
+            {
+                idx=mid;
+                hi=mid-1;
+            }
+        }
+        return idx;
+TC-O(logN)
+SC-O(1)
