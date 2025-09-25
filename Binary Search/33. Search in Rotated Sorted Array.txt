@@ -1,0 +1,55 @@
+Problem Statement: Given an integer array arr of size N, sorted in ascending order (with distinct values) and a target value k. Now the array is rotated at some pivot point unknown to you. Find the index at which k is present and if k is not present return -1.
+
+Appr: As array is sorted but rotated so we can not directly apply BS so first we have to find which sorted half we are in and then check if number is in the sorted half 
+class Solution {
+    public int search(int[] nums, int target) {
+        int lo=0;
+        int hi=nums.length-1;
+        while(lo<=hi)
+        {
+            int mid=lo+(hi-lo)/2;
+            if(nums[mid]==target)
+            {
+                return mid;
+            }
+            else if(nums[lo]<=nums[mid])
+            {
+                if(nums[lo]<=target && target<=nums[mid])
+                {
+                    hi=mid-1;
+                }
+                else
+                {
+                    lo=mid+1;
+                }
+            }
+            else
+            {
+                if(nums[mid]<=target && target<=nums[hi])
+                {
+                    lo=mid+1;
+                }
+                else
+                {
+                    hi=mid-1;
+                }
+            }
+        }
+        return -1;
+    }
+}
+TC-O(logN)
+SC-O(1)
+
+Problem: IF duplicates allowed 
+1,1,0,1,1,1,1
+Appr: consider if 1 is the not the number but still we fall in the loop where we can not predict the sorted half so the best thing is to kick these numbers from our range
+            if(nums[lo]==nums[mid] && nums[mid]==nums[hi])
+            {
+                lo++;
+                hi--;
+                continue;  // if more than 1 time 
+            }
+TC-O(N)-> worst (in every iteration with duplicates we only skip one element per part not half like above
+TC-O(logN)->average
+SC-O(1)
