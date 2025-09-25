@@ -1,0 +1,38 @@
+Problem Statement: Given an array of N integers. Every number in the array except one appears twice. Find the single number in the array.
+
+Appr: To use BS we need a condition to eleminate one half like (even, odd)->right, (odd, even)->left but we also have to handle edge cases so use lo=1, hi=n-2
+        int n=nums.length;
+        int lo=1;
+        int hi=n-2;
+        if(n==1)
+        {
+            return nums[0];
+        }
+        if(nums[0]!=nums[1])
+        {
+            return nums[0];
+        }
+        if(nums[n-1]!=nums[n-2])
+        {
+            return nums[n-1];
+        }
+        while(lo<=hi)
+        {
+            int mid=lo+(hi-lo)/2;
+            if(nums[mid]!=nums[mid-1] && nums[mid]!=nums[mid+1])
+            {
+                return nums[mid];
+            }
+            if((mid%2==1 && nums[mid]==nums[mid-1]) || (mid%2==0 && nums[mid]==nums[mid+1]))
+            {
+                lo=mid+1;
+            }
+            else
+            {
+                hi=mid-1;
+            }
+        }
+        return -1;
+    }
+TC-O(logN)
+SC-(1)
