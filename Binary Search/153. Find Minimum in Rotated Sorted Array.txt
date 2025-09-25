@@ -1,0 +1,32 @@
+Problem Statement: Given an integer array arr of size N, sorted in ascending order (with distinct values). Now the array is rotated between 1 to N times which is unknown. Find the minimum element in the array.
+
+Appr: in sorted array min will be lo, in rotated sorted array min may be lo or through mid
+        int lo=0;
+        int hi=nums.length-1;
+        int min=Integer.MAX_VALUE;
+        while(lo<=hi)
+        {
+            int mid=lo+(hi-lo)/2;
+            if(nums[lo]<=nums[mid])
+            {
+                min=Math.min(min, nums[lo]);
+                lo=mid+1;
+            }
+            else
+            {
+                min=Math.min(min, nums[mid]);
+                hi=mid-1;
+            }
+        }
+    return min;
+    }
+TC-O(logN)
+SC-O(1)
+
+Problem: IF dupplicated allowed 
+we can not use lo++, hi-- like search in rotated sorted array bcs 2,2,2,0,1
+so we will lo++ if nums[lo]==nums[mid]
+
+TC-O(logN)->average
+TC-O(N)->worst
+SC-O(1)
