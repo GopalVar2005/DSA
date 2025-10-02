@@ -1,0 +1,62 @@
+Problem Statement:  The coding blocks members went to the success party of their first ever online boot-camp at Murthal. They ordered P number of paranthas. The stall has L cooks and each cook has a rank R. A cook with a rank R can cook 1 parantha in the first R minutes 1 more parantha in the next 2R minutes, 1 more parantha in 3R minutes and so on(he can only cook a complete parantha) ( For example if a cook is ranked 2.. he will cook one parantha in 2 minutes one more parantha in the next 4 mins and one more in the next 6 minutes hence in total 12 minutes he cooks 3 paranthas. In 13 minutes also he can cook only 3 paranthas as he does not have enough time for the 4th parantha). Calculate the minimum time needed to cook all the paranthas.
+
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int parathas=sc.nextInt();
+        int n=sc.nextInt();
+        int[] rank=new int[n];
+        int min=Integer.MAX_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            rank[i]=sc.nextInt();
+            min=Math.min(min, rank[i]);
+        }
+        System.out.println(find(rank,n,parathas, min));
+    }
+    public static int find(int[] rank,int n,int parathas, int min)
+    {
+        int lo=min;
+        int hi=rank[n-1]*((parathas*(parathas+1))/2);
+        while(lo<=hi)
+        {
+            int mid=lo+(hi-lo)/2;
+            if(isPossible(rank,parathas,mid))
+            {
+                hi=mid-1;
+            }
+            else
+            {
+                lo=mid+1;
+            }
+        }
+        return lo;
+    }
+    public static boolean isPossible(int[] rank,int parathas,int mid)
+    {
+        int total=0;
+        for(int current:rank)
+        {
+            int time=0; // working in parallel
+            int k=1;
+            while(time+current*k<=mid)
+            {
+                time+=current*k;
+                k++;
+                total++;
+            }
+            if(total>=parathas)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+Time Complexity = O(n · √hi · log hi)
+
+Space Complexity = O(1)
+
