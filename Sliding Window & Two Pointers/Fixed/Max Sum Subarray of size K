@@ -1,0 +1,24 @@
+Problem Statement:  Given an array of integers arr[]  and a number k. Return the maximum sum of a subarray of size k.
+
+class Solution {
+    public int maxSubarraySum(int[] arr, int k) {
+        // Code here
+        int max=Integer.MIN_VALUE;
+        int sum=0;
+        int i=0,j=0;
+        while(j<arr.length)
+        {
+            sum+=arr[j];
+            if(j-i+1==k)
+            {
+                max=Math.max(max, sum);
+                sum-=arr[i];
+                i++;
+            }
+            j++;
+        }
+        return max;
+    }
+}
+TC-O(N)
+SC-O(1)
