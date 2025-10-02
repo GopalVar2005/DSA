@@ -1,0 +1,52 @@
+Problem Statement:  You are given an integer array nums and an integer k. Find the maximum subarray sum of all the subarrays of nums that meet the following conditions:
+The length of the subarray is k, and
+All the elements of the subarray are distinct.
+Return the maximum subarray sum of all the subarrays that meet the conditions. If no subarray meets the conditions, return 0.
+
+class Solution {
+    public long maximumSubarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> freq=new HashMap<>();
+        int i=0, j=0, duplicates=0;
+        long max=Long.MIN_VALUE, sum=0;
+        while(j<nums.length)
+        {
+            freq.put(nums[j], freq.getOrDefault(nums[j], 0)+1);
+            if(freq.get(nums[j])>1)
+            {
+                duplicates++;
+            }
+            sum+=nums[j];
+            if(j-i+1<k)
+            {
+                j++;
+            }
+            else if(j-i+1==k)
+            {
+                if(duplicates==0)
+                {
+                    max=Math.max(max, sum);
+                }
+                sum-=nums[i];
+                int cur=freq.get(nums[i]);
+                if(cur==1)
+                {
+                    freq.remove(nums[i]);
+                }
+                else
+                {
+                    freq.put(nums[i], cur-1);
+                    duplicates--;
+                }
+                i++;
+                j++;
+            }
+        }
+        if(max==Long.MIN_VALUE)
+        {
+            return 0;
+        }
+        return max;
+    }
+}
+Time Complexity: O(n)
+Space Complexity: O(k)
