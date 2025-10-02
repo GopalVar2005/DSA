@@ -1,0 +1,58 @@
+Problem Statement:  You are given n stalls positioned at specific distances along a straight line.Your task is to place c cows in these stalls such that the minimum distance betweeany two cows is maximized.
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int nos=sc.nextInt();
+        int noc=sc.nextInt();
+        int[] stall=new int[nos];
+        for(int i=0;i<nos;i++)
+        {
+            stall[i]=sc.nextInt();
+        }
+        Arrays.sort(stall);
+        System.out.println(largest_min_dis(stall,nos,noc));
+    }
+    public static int largest_min_dis(int[] stall,int nos,int noc)
+    {
+        int lo=0;
+        int hi=(stall[nos-1]-stall[0])/(noc-1);
+        int ans=0;
+        while(lo<=hi)
+        {
+            int mid=(lo+hi)/2;
+            if(isitPossible(stall,noc,mid))
+            {
+                ans=mid;
+                lo=mid+1;
+            }
+            else
+            {
+                hi=mid-1;
+            }
+        }
+        return ans;
+    }
+    public static boolean isitPossible(int[] stall,int noc,int mid)
+    {
+        int cow=1; c                                      
+        int posi=stall[0];
+        for(int i=1;i<stall.length;i++)
+        {
+            if(stall[i]-posi>=mid)
+            {
+                posi=stall[i];
+                cow++;
+            }
+            if(cow==noc)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+TC = O(n log n + n · log(maxDistance))
+
+SC = O(1)
