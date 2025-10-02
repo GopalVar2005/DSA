@@ -1,0 +1,69 @@
+Problem Statement:  You are given number of pages in n different books and m students. The books are arranged in ascending order of number of pages. Every student is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0)
+        {
+            int n=sc.nextInt();
+            int[] pages=new int[n];
+            int nos=sc.nextInt();
+            int sum=0;
+            int max=Integer.MIN_VALUE;
+            for(int i=0;i<n;i++)
+            {
+                pages[i]=sc.nextInt();
+                max=Math.max(max, pages[i]);
+                sum+=pages[i];
+            }
+            System.out.println(find(pages,n,nos,sum, max));
+        }
+    }
+    public static int find(int[] pages,int n,int nos,int sum, int max)
+    {
+        int lo=max;
+        int hi=sum;
+        while(lo<=hi)
+        {
+            int mid=lo+(hi-lo)/2;
+            if(isPossible(pages,nos,mid))
+            {
+                hi=mid-1;
+            }
+            else
+            {
+                lo=mid+1;
+            }
+        }
+        return lo;
+    }
+    public static boolean isPossible(int[] pages,int nos,int mid)
+    {
+        int student=1;
+        int read=0;
+        for(int i=0;i<pages.length;)
+        {
+            if(read+pages[i]<=mid)
+            {
+                read+=pages[i];
+                i++;
+            }
+            else
+            {
+                student++;
+                read=0;
+            }
+            if(student>nos)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+Time Complexity: O(n · log(sum))
+
+Space Complexity: O(n)
