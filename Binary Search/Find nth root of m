@@ -1,0 +1,27 @@
+Problem Statement:  You are given 2 numbers n and m, the task is to find n√m (nth root of m). If the root is not integer then returns -1.
+
+    public int nthRoot(int n, int m) {
+        // code here
+        long lo=1;
+        long hi=m;
+        while(lo<=hi)
+        {
+            long mid=lo+(hi-lo)/2;
+            int mul=(int)Math.pow(mid, n);
+            if(mul==m)
+            {
+                return (int)mid;
+            }
+            else if(mul<m)
+            {
+                lo=mid+1;
+            }
+            else
+            {
+                hi=mid-1;
+            }
+        }
+        return -1;
+    }
+TC-O(logN)
+SC-(1)
